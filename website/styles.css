@@ -246,6 +246,10 @@ h1, h2 { font-family: var(--serif); font-weight: 700; text-wrap: balance; }
 .steps li::before { content: counter(s); display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-ink); font-weight: 700; font-size: 0.9rem; }
 .steps strong { color: var(--text); }
 
+/* Install methods */
+.method { font-size: 0.95rem; font-weight: 600; margin: 28px 0 10px; }
+.method:first-child { margin-top: 0; }
+
 /* FAQ */
 .faq { max-width: 50em; display: grid; gap: 10px; }
 .faq details { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0 20px; }

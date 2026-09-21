@@ -210,20 +210,33 @@
 <section class="section section-alt" id="install">
   <div class="container split">
     <div class="section-head" style="margin-bottom:0"><h2>Install</h2>
-      <p>Requires macOS 14 or later and the Xcode command-line tools. Signed downloads will be on the <a href="https://github.com/bcollard/pastiche/releases">releases page</a>.</p></div>
+      <p>Requires macOS 14 or later. Releases are signed, notarized and universal.</p></div>
     <div>
+      <p class="method">Homebrew</p>
       <div class="codeblock">
-        <button class="copy" type="button" data-copy="git clone https://github.com/bcollard/pastiche.git&#10;cd pastiche &amp;&amp; make run">Copy</button>
-<pre><code>git clone https://github.com/bcollard/pastiche.git
-cd pastiche &amp;&amp; make run
-<span class="c"># make install  copies it to /Applications</span></code></pre>
+        <button class="copy" type="button" data-copy="brew tap bcollard/pastiche&#10;brew trust --tap bcollard/pastiche&#10;brew install --cask pastiche">Copy</button>
+<pre><code>brew tap bcollard/pastiche
+brew trust --tap bcollard/pastiche
+brew install --cask pastiche</code></pre>
       </div>
-      <ol class="steps" style="margin-top:26px">
+      <p class="note">Update with <code>brew upgrade --cask pastiche</code>. Homebrew 6 and later asks you to trust third-party taps.</p>
+
+      <p class="method">Download</p>
+      <p class="note" style="margin-top:0">Get the zip from the <a href="https://github.com/bcollard/pastiche/releases">releases page</a> and move Pastiche.app to Applications.</p>
+
+      <p class="method">From source</p>
+      <div class="codeblock">
+        <button class="copy" type="button" data-copy="git clone https://github.com/bcollard/pastiche.git&#10;cd pastiche &amp;&amp; make install">Copy</button>
+<pre><code>git clone https://github.com/bcollard/pastiche.git
+cd pastiche &amp;&amp; make install</code></pre>
+      </div>
+      <p class="note">Needs the Xcode command-line tools. A local build targets your Mac's architecture.</p>
+
+      <ol class="steps" style="margin-top:30px">
         <li><span>Find the clipboard icon in the menu bar. There is no Dock icon.</span></li>
         <li><span>Copy something, then press <kbd>⌘</kbd> <kbd>'</kbd>.</span></li>
         <li><span>Grant Accessibility when asked. It is optional: without it you paste with <kbd>⌘V</kbd> yourself.</span></li>
       </ol>
-      <p class="note">A local build targets your Mac's architecture. Releases are universal.</p>
     </div>
   </div>
 </section>
