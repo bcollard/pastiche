@@ -264,6 +264,10 @@ h1, h2 { font-family: var(--serif); font-weight: 700; text-wrap: balance; }
 .legal { margin-top: 22px; font-size: 0.82rem; max-width: 60em; }
 
 /* ---------- Prose pages (privacy, 404) ---------- */
+.prose table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.95rem; }
+.prose th, .prose td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.prose th { color: var(--text-3); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.prose td { color: var(--text-2); }
 .prose { max-width: 44em; padding: clamp(40px, 7vw, 80px) 0 80px; }
 .prose h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin-bottom: 8px; }
 .prose h2 { font-size: 1.55rem; margin: 40px 0 10px; }

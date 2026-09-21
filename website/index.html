@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Pastiche — an open-source clipboard manager for macOS</title>
-  <meta name="description" content="Pastiche is a small, open-source clipboard manager for macOS. Press a shortcut, arrow to what you copied earlier, press Return to paste it. Text and images, inline search, nothing leaves your Mac.">
+  <meta name="description" content="Pastiche is an open-source clipboard manager for macOS. Text and images, inline search, keyboard-first. Nothing leaves your Mac.">
   <link rel="canonical" href="https://pastiche.runlocal.dev/">
 
   <meta name="theme-color" content="#fbf9f5" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://pastiche.runlocal.dev/">
   <meta property="og:title" content="Pastiche — everything you've copied, one shortcut away">
-  <meta property="og:description" content="Open-source clipboard manager for macOS. Text and images, inline search, keyboard-first, and nothing leaves your Mac.">
+  <meta property="og:description" content="Open-source clipboard manager for macOS. Text and images, inline search, keyboard-first.">
   <meta property="og:image" content="https://pastiche.runlocal.dev/assets/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
@@ -83,18 +83,14 @@
     <div>
       <div class="eyebrow"><span class="dot"></span> Open source · Native Swift · macOS 14+</div>
       <h1>Everything you’ve copied, <em>one shortcut</em> away.</h1>
-      <p class="lede">
-        Pastiche keeps your clipboard history and brings it up on <kbd>⌘</kbd> <kbd>'</kbd>.
-        Arrow to the snippet or screenshot you copied an hour ago, press <kbd>Return</kbd>,
-        and it lands in the app you were just in.
-      </p>
+      <p class="lede">Pastiche is a clipboard manager for macOS. Press <kbd>⌘</kbd> <kbd>'</kbd> to open your history, pick an item with the arrow keys, press <kbd>Return</kbd> to paste it.</p>
       <div class="cta">
         <a class="btn btn-primary" href="#install">Get Pastiche</a>
         <a class="btn btn-ghost" href="https://github.com/bcollard/pastiche">View the source</a>
       </div>
       <ul class="facts">
         <li>MIT licensed</li>
-        <li>About 2,200 lines of Swift</li>
+        <li>2,200 lines of Swift</li>
         <li>1.2&nbsp;MB app</li>
       </ul>
     </div>
@@ -134,24 +130,20 @@
 <!-- ================= Features ================= -->
 <section class="section section-alt" id="features">
   <div class="container">
-    <div class="section-head">
-      <div class="eyebrow"><span class="dot"></span> What it does</div>
-      <h2>A clipboard history, and not much else.</h2>
-      <p>Pastiche does one job. There is no sync, no snippet library, and no stack of settings to work through before it is useful.</p>
-    </div>
+    <div class="section-head"><h2>Features</h2></div>
     <div class="cards">
-      <article class="card"><div class="glyph">⌘</div><h3>One shortcut</h3>
-        <p><kbd>⌘</kbd><kbd>'</kbd> by default, rebindable to anything with a modifier. The popup opens on the screen your pointer is on, and closes when you click away.</p></article>
-      <article class="card"><div class="glyph">↕</div><h3>Keyboard all the way</h3>
-        <p>Arrows to move, <kbd>←</kbd><kbd>→</kbd> to switch between All, Text and Images, <kbd>Return</kbd> to paste, <kbd>⌘1</kbd>–<kbd>⌘0</kbd> to jump straight to a row.</p></article>
+      <article class="card"><div class="glyph">⌘</div><h3>Shortcut</h3>
+        <p><kbd>⌘</kbd><kbd>'</kbd> opens the popup. Change it in Settings.</p></article>
+      <article class="card"><div class="glyph">↕</div><h3>Keyboard</h3>
+        <p>Arrows move, <kbd>Return</kbd> pastes, <kbd>⌘1</kbd>–<kbd>⌘0</kbd> jump to a row.</p></article>
       <article class="card"><div class="glyph">▣</div><h3>Text and images</h3>
-        <p>Snippets show as text. Images show as large previews sized to their own aspect ratio, so a screenshot looks like a screenshot. Filter to either type.</p></article>
-      <article class="card"><div class="glyph">⌕</div><h3>Search as you type</h3>
-        <p>Start typing and the list narrows. Every word has to match, so “png kong” finds what you would expect. <kbd>Tab</kbd> jumps into the field if you prefer.</p></article>
-      <article class="card"><div class="glyph">↩</div><h3>Pastes where you were</h3>
-        <p>Hands focus back to the app you came from and presses <kbd>⌘V</kbd> for you. That needs the Accessibility permission; without it, Pastiche just loads the clipboard.</p></article>
-      <article class="card"><div class="glyph">✕</div><h3>Forgets on request</h3>
-        <p>Delete an entry with <kbd>⌫</kbd> as you navigate, or clear everything. History is saved to disk, capped at 500 items by default, and survives restarts.</p></article>
+        <p>Images show as large previews. Filter by type with <kbd>←</kbd><kbd>→</kbd>.</p></article>
+      <article class="card"><div class="glyph">⌕</div><h3>Search</h3>
+        <p>Start typing to filter. Every word must match.</p></article>
+      <article class="card"><div class="glyph">↩</div><h3>Paste</h3>
+        <p>Returns focus to your app and presses <kbd>⌘V</kbd>. Needs the Accessibility permission.</p></article>
+      <article class="card"><div class="glyph">✕</div><h3>History</h3>
+        <p>Saved to disk, 500 items by default. Delete an entry with <kbd>⌫</kbd>.</p></article>
     </div>
   </div>
 </section>
@@ -159,11 +151,7 @@
 <!-- ================= Keyboard ================= -->
 <section class="section" id="keyboard">
   <div class="container">
-    <div class="section-head">
-      <div class="eyebrow"><span class="dot"></span> Keyboard</div>
-      <h2>Built to be used without the mouse.</h2>
-      <p>The paste key and the delete key are configurable. Everything else works as listed.</p>
-    </div>
+    <div class="section-head"><h2>Keyboard</h2></div>
     <div class="keys">
       <div>
         <div class="key-row"><span>Open or close the popup</span><span class="combo"><kbd>⌘</kbd><kbd>'</kbd></span></div>
@@ -173,56 +161,46 @@
         <div class="key-row"><span>Paste the numbered row</span><span class="combo"><kbd>⌘1</kbd> … <kbd>⌘0</kbd></span></div>
       </div>
       <div>
-        <div class="key-row"><span>Search (or just start typing)</span><span class="combo"><kbd>Tab</kbd></span></div>
+        <div class="key-row"><span>Search</span><span class="combo"><kbd>Tab</kbd></span></div>
         <div class="key-row"><span>Clear the search, then close</span><span class="combo"><kbd>Esc</kbd></span></div>
         <div class="key-row"><span>Delete the selected item</span><span class="combo"><kbd>⌫</kbd></span></div>
-        <div class="key-row"><span>Clear the whole history</span><span class="combo"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>⌫</kbd></span></div>
-        <div class="key-row"><span>Jump eight rows, or to either end</span><span class="combo"><kbd>PgUp</kbd><kbd>PgDn</kbd><kbd>Home</kbd><kbd>End</kbd></span></div>
+        <div class="key-row"><span>Clear the history</span><span class="combo"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>⌫</kbd></span></div>
+        <div class="key-row"><span>Jump eight rows, or to an end</span><span class="combo"><kbd>PgUp</kbd><kbd>PgDn</kbd><kbd>Home</kbd><kbd>End</kbd></span></div>
       </div>
     </div>
-    <p class="note">Bare <kbd>⌫</kbd> only deletes while the caret is outside the search field, where it has to stay ordinary text editing. <kbd>⌘</kbd><kbd>⌫</kbd> deletes from either place.</p>
+    <p class="note">Paste and delete keys are configurable. <kbd>⌫</kbd> deletes only outside the search field; <kbd>⌘</kbd><kbd>⌫</kbd> works everywhere.</p>
   </div>
 </section>
 
 <!-- ================= Privacy ================= -->
 <section class="section section-alt" id="privacy">
   <div class="container split">
-    <div class="section-head" style="margin-bottom:0">
-      <div class="eyebrow"><span class="dot"></span> Privacy</div>
-      <h2>Your clipboard is the most sensitive thing on your Mac.</h2>
-      <p>It is where passwords, tokens and half-written messages pass through. Pastiche is designed around that, and it tells you where the limits are.</p>
-    </div>
+    <div class="section-head" style="margin-bottom:0"><h2>Privacy</h2></div>
     <div>
       <ul class="list">
-        <li><span><strong>It never leaves your Mac.</strong> The source contains no networking code, and no analytics. You can check, and this finds nothing:<code class="block">grep -rnE "URLSession|NWConnection" Sources</code></span></li>
-        <li><span><strong>Secrets are skipped.</strong> Anything an app marks as concealed, the convention password managers use on the pasteboard, is never recorded. Neither are transient or auto-generated items.</span></li>
-        <li><span><strong>Ignore any app.</strong> Copies made while a listed app is in front are dropped. 1Password, Bitwarden and Keychain Access are pre-filled.</span></li>
-        <li><span><strong>Nothing is encrypted at rest.</strong> History is plain JSON plus PNG files in <code>~/Library/Application Support</code>. Treat that folder like any file of your own notes. “Clear history” deletes both.</span></li>
-        <li><span><strong>Accessibility is optional.</strong> It is used for one thing, pressing <kbd>⌘V</kbd> in the app you came from.</span></li>
+        <li><span><strong>Local only.</strong> The source has no networking code. This finds nothing:<code class="block">grep -rnE "URLSession|NWConnection" Sources</code></span></li>
+        <li><span><strong>Secrets skipped.</strong> Items an app marks as concealed, transient or auto-generated are not recorded.</span></li>
+        <li><span><strong>Ignored apps.</strong> Copies from listed apps are dropped. 1Password, Bitwarden and Keychain Access are pre-filled.</span></li>
+        <li><span><strong>Not encrypted.</strong> History is plain JSON and PNG files in <code>~/Library/Application Support/Pastiche</code>.</span></li>
+        <li><span><strong>Accessibility is optional.</strong> It is only used to send <kbd>⌘V</kbd>.</span></li>
       </ul>
-      <p class="note" style="margin-top:20px">The full policy is on the <a href="privacy.html">privacy page</a>.</p>
+      <p class="note" style="margin-top:20px"><a href="privacy.html">Full privacy policy</a></p>
     </div>
   </div>
 </section>
 
-<!-- ================= Verify ================= -->
+<!-- ================= Source ================= -->
 <section class="section" id="verify">
   <div class="container split">
-    <div class="section-head" style="margin-bottom:0">
-      <div class="eyebrow"><span class="dot"></span> Check it yourself</div>
-      <h2>Small enough to read.</h2>
-      <p>Thirteen Swift files and about 2,200 lines, with no third-party dependencies. It links Apple frameworks and nothing else, which is a one-line check:</p>
-    </div>
+    <div class="section-head" style="margin-bottom:0"><h2>Source</h2>
+      <p>13 Swift files, about 2,200 lines, no third-party dependencies. Only Apple frameworks are linked:</p></div>
     <div>
       <div class="codeblock">
         <button class="copy" type="button" data-copy="otool -L /Applications/Pastiche.app/Contents/MacOS/*">Copy</button>
-<pre><code>otool -L /Applications/Pastiche.app/Contents/MacOS/*
-<span class="c"># AppKit, SwiftUI, Carbon, CryptoKit,</span>
-<span class="c"># ServiceManagement… all Apple's.</span></code></pre>
+<pre><code>otool -L /Applications/Pastiche.app/Contents/MacOS/*</code></pre>
       </div>
       <div class="callout" style="margin-top:18px">
-        <strong>Coming from Copy ’Em?</strong> The repository includes an importer that reads its store
-        <em>read-only</em> and brings over your newest entries, images converted to PNG. Pastiche is not affiliated with Copy ’Em.
+        <strong>Coming from Copy ’Em?</strong> <code>Tools/import_copyem.py</code> imports your newest entries. It reads the Copy ’Em store read-only.
       </div>
     </div>
   </div>
@@ -231,24 +209,21 @@
 <!-- ================= Install ================= -->
 <section class="section section-alt" id="install">
   <div class="container split">
-    <div class="section-head" style="margin-bottom:0">
-      <div class="eyebrow"><span class="dot"></span> Install</div>
-      <h2>Build it in two commands.</h2>
-      <p>You need macOS 14 or later and the Xcode command-line tools. Signed and notarized downloads will be published on the <a href="https://github.com/bcollard/pastiche/releases">releases page</a>.</p>
-    </div>
+    <div class="section-head" style="margin-bottom:0"><h2>Install</h2>
+      <p>Requires macOS 14 or later and the Xcode command-line tools. Signed downloads will be on the <a href="https://github.com/bcollard/pastiche/releases">releases page</a>.</p></div>
     <div>
       <div class="codeblock">
         <button class="copy" type="button" data-copy="git clone https://github.com/bcollard/pastiche.git&#10;cd pastiche &amp;&amp; make run">Copy</button>
 <pre><code>git clone https://github.com/bcollard/pastiche.git
 cd pastiche &amp;&amp; make run
-<span class="c"># make install  →  copies it to /Applications</span></code></pre>
+<span class="c"># make install  copies it to /Applications</span></code></pre>
       </div>
       <ol class="steps" style="margin-top:26px">
-        <li><span><strong>Look for the clipboard icon</strong> in your menu bar. There is no Dock icon and no main window.</span></li>
-        <li><span><strong>Copy a few things, then press <kbd>⌘</kbd> <kbd>'</kbd></strong> to open the popup.</span></li>
-        <li><span><strong>Grant Accessibility when asked</strong>, so Return can paste for you. You can decline and paste with <kbd>⌘V</kbd> yourself.</span></li>
+        <li><span>Find the clipboard icon in the menu bar. There is no Dock icon.</span></li>
+        <li><span>Copy something, then press <kbd>⌘</kbd> <kbd>'</kbd>.</span></li>
+        <li><span>Grant Accessibility when asked. It is optional: without it you paste with <kbd>⌘V</kbd> yourself.</span></li>
       </ol>
-      <p class="note">Builds run on the architecture of the Mac that made them, so one from an Apple silicon Mac is arm64-only.</p>
+      <p class="note">A local build targets your Mac's architecture. Releases are universal.</p>
     </div>
   </div>
 </section>
@@ -256,25 +231,22 @@ cd pastiche &amp;&amp; make run
 <!-- ================= FAQ ================= -->
 <section class="section" id="faq">
   <div class="container">
-    <div class="section-head">
-      <div class="eyebrow"><span class="dot"></span> Questions</div>
-      <h2>Worth answering up front.</h2>
-    </div>
+    <div class="section-head"><h2>FAQ</h2></div>
     <div class="faq">
       <details><summary>Why does it ask for Accessibility?</summary>
-        <p>Only to press <kbd>⌘V</kbd> in the app you came from. macOS treats posting keystrokes to another app as controlling the computer. The popup, the shortcut and the history all work without it; turn off “Paste into the active app automatically” and Pastiche will simply put the item on your clipboard.</p></details>
-      <details><summary>Does it record my passwords?</summary>
-        <p>Not from any app that marks its copies as concealed, which is the convention password managers use on the pasteboard; 1Password does. An app that does not mark its secrets is recorded like any other copy. That is what the ignored-apps list is for: 1Password, Bitwarden and Keychain Access are pre-filled, and you can add any other app by its bundle ID. You can also delete an entry with <kbd>⌫</kbd>.</p></details>
-      <details><summary>Where is my history, and is it encrypted?</summary>
-        <p>In <code>~/Library/Application Support/Pastiche/</code>: text in <code>history.json</code>, images as PNGs. It is not encrypted. If that matters for your threat model, FileVault covers the disk and the ignored-apps list covers the sources you care about.</p></details>
-      <details><summary>Is formatting preserved when I paste?</summary>
-        <p>No. Pastiche keeps plain text and images. Rich text, files and other pasteboard types are not stored, and text pastes back as plain text.</p></details>
+        <p>To press <kbd>⌘V</kbd> in the app you came from. Without it, Pastiche copies the item and you paste it yourself.</p></details>
+      <details><summary>Does it record passwords?</summary>
+        <p>Not from apps that mark them as concealed; 1Password does. Add any other app to the ignored list in Settings, or delete the entry with <kbd>⌫</kbd>.</p></details>
+      <details><summary>Where is my history?</summary>
+        <p>In <code>~/Library/Application Support/Pastiche/</code>. It is not encrypted.</p></details>
+      <details><summary>Is formatting kept?</summary>
+        <p>No. Pastiche stores plain text and images.</p></details>
       <details><summary>Can I change the shortcut?</summary>
-        <p>Yes. Settings has a recorder for the global shortcut, a choice between <kbd>Return</kbd> and <kbd>⌘</kbd><kbd>Return</kbd> for pasting, and a choice for the delete key. The history cap is adjustable from 10 to 10,000 items.</p></details>
+        <p>Yes, in Settings. The paste key, the delete key and the history size (10 to 10,000) are configurable too.</p></details>
       <details><summary>Does it sync between Macs?</summary>
-        <p>No, and it is not planned. Everything stays on the Mac that copied it.</p></details>
+        <p>No.</p></details>
       <details><summary>Does it run on Intel Macs?</summary>
-        <p>The code is not Apple-silicon specific, but a build made on an Apple silicon Mac is arm64-only. Build on an Intel Mac, or open an issue if you would like universal binaries published.</p></details>
+        <p>Releases are universal. A local build targets the Mac it was built on.</p></details>
     </div>
   </div>
 </section>
@@ -293,7 +265,7 @@ cd pastiche &amp;&amp; make run
         <a href="privacy.html">Privacy</a>
       </nav>
     </div>
-    <p class="legal">Pastiche is an independent project and is not affiliated with Apple Inc. or the makers of Copy ’Em. macOS is a trademark of Apple Inc.</p>
+    <p class="legal">Not affiliated with Apple Inc. or the makers of Copy ’Em. macOS is a trademark of Apple Inc.</p>
   </div>
 </footer>
 
