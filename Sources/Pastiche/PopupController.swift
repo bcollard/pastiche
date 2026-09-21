@@ -153,6 +153,8 @@ final class PopupController {
         // the monitor to let that one through untouched.
         monitor.suppressedFingerprint = fingerprint
 
+        if settings.moveToTopOnPaste { store.moveToTop(item) }
+
         guard settings.autoPaste else { return }
         // Give the reactivated app a moment to become frontmost, otherwise the
         // synthetic ⌘V lands on whatever was still in front.

@@ -9,6 +9,12 @@ let package = Package(
             name: "Pastiche",
             path: "Sources/Pastiche",
             swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
+        .testTarget(
+            name: "PasticheTests",
+            dependencies: ["Pastiche"],
+            path: "Tests/PasticheTests",
+            swiftSettings: [.swiftLanguageMode(.v5)]
         )
     ]
 )

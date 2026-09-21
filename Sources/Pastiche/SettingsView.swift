@@ -72,6 +72,7 @@ struct SettingsView: View {
                         Text("items").foregroundStyle(.secondary)
                     }
                 }
+                Toggle("Move pasted item to the top", isOn: $settings.moveToTopOnPaste)
                 Toggle("Open at login", isOn: $settings.launchAtLogin)
             } header: {
                 Text("History")

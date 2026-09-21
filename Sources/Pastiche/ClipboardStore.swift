@@ -20,13 +20,16 @@ final class ClipboardStore: ObservableObject {
     private var imageCache: [UUID: NSImage] = [:]
     private var saveWorkItem: DispatchWorkItem?
 
-    init(settings: Settings) {
+    /// `directory` exists so tests can use a temporary folder instead of the
+    /// real history.
+    init(settings: Settings, directory: URL? = nil) {
         self.settings = settings
-        let base = FileManager.default
+        let root = directory ?? FileManager.default
             .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        directory = base.appendingPathComponent("Pastiche", isDirectory: true)
-        imagesDirectory = directory.appendingPathComponent("images", isDirectory: true)
-        historyFile = directory.appendingPathComponent("history.json")
+            .appendingPathComponent("Pastiche", isDirectory: true)
+        self.directory = root
+        imagesDirectory = root.appendingPathComponent("images", isDirectory: true)
+        historyFile = root.appendingPathComponent("history.json")
 
         try? FileManager.default.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
         load()
@@ -79,6 +82,11 @@ final class ClipboardStore: ObservableObject {
         )
         imageCache[id] = image
         insert(item)
+    }
+
+    /// Moves an entry to the top, as if it had just been copied.
+    func moveToTop(_ item: ClipboardItem) {
+        _ = promoteExisting(fingerprint: item.fingerprint)
     }
 
     func delete(_ item: ClipboardItem) {

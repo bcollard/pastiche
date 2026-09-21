@@ -84,6 +84,10 @@ final class Settings: ObservableObject {
     @Published var autoPaste: Bool {
         didSet { defaults.set(autoPaste, forKey: Keys.autoPaste) }
     }
+    /// After pasting an item from the popup, move it to the top of the list.
+    @Published var moveToTopOnPaste: Bool {
+        didSet { defaults.set(moveToTopOnPaste, forKey: Keys.moveToTopOnPaste) }
+    }
     @Published var deleteKey: DeleteKey {
         didSet { defaults.set(deleteKey.rawValue, forKey: Keys.deleteKey) }
     }
@@ -108,6 +112,7 @@ final class Settings: ObservableObject {
         static let maxItems = "maxItems"
         static let commitKey = "commitKey"
         static let autoPaste = "autoPaste"
+        static let moveToTopOnPaste = "moveToTopOnPaste"
         static let deleteKey = "deleteKey"
         static let skipConcealed = "skipConcealed"
         static let skipTransient = "skipTransient"
@@ -124,6 +129,7 @@ final class Settings: ObservableObject {
         maxItems = defaults.object(forKey: Keys.maxItems) as? Int ?? 500
         commitKey = CommitKey(rawValue: defaults.string(forKey: Keys.commitKey) ?? "") ?? .return
         autoPaste = defaults.object(forKey: Keys.autoPaste) as? Bool ?? true
+        moveToTopOnPaste = defaults.object(forKey: Keys.moveToTopOnPaste) as? Bool ?? true
         deleteKey = DeleteKey(rawValue: defaults.string(forKey: Keys.deleteKey) ?? "") ?? .delete
         skipConcealed = defaults.object(forKey: Keys.skipConcealed) as? Bool ?? true
         skipTransient = defaults.object(forKey: Keys.skipTransient) as? Bool ?? true

@@ -85,6 +85,9 @@ to stay as ordinary text editing; `⌘⌫` deletes from either place. *Settings 
 General → Delete entry with* switches the bare key off if you would rather only
 `⌘⌫` removed things.
 
+A pasted item moves to the top of the list. Turn that off in *Settings → General →
+History → Move pasted item to the top*.
+
 The search box clears every time the popup opens, but the **type filter is
 sticky** — it stays where you left it until you change it, the way Copy 'Em
 behaves. The segmented control at the top always shows which filter is live.
