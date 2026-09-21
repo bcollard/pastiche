@@ -107,16 +107,30 @@ jobs:
 
           security find-identity -v -p codesigning "$keychain"
 
+      - name: Check the notarization credentials
+        # Fails in seconds with a clear message instead of after a full build.
+        env:
+          NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
+          NOTARY_TEAM_ID: ${{ secrets.NOTARY_TEAM_ID }}
+          NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
+        run: |
+          if ! xcrun notarytool history --apple-id "$NOTARY_APPLE_ID" --team-id "$NOTARY_TEAM_ID" --password "$NOTARY_PASSWORD" > /dev/null; then
+            echo "::error::Apple rejected NOTARY_APPLE_ID, NOTARY_TEAM_ID and NOTARY_PASSWORD. Check that the password is an app-specific password for that Apple ID and that the team ID matches."
+            exit 1
+          fi
+
       - name: Build, sign, notarize and staple
         env:
           NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
           NOTARY_TEAM_ID: ${{ secrets.NOTARY_TEAM_ID }}
           NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
         run: |
+          # notarytool has no @env: syntax for --password; the value goes on the
+          # command line. GitHub masks registered secrets in the log.
           make release \
             VERSION="$VERSION" \
             BUILD="$GITHUB_RUN_NUMBER" \
-            NOTARY_ARGS="--apple-id $NOTARY_APPLE_ID --team-id $NOTARY_TEAM_ID --password @env:NOTARY_PASSWORD"
+            NOTARY_ARGS="--apple-id $NOTARY_APPLE_ID --team-id $NOTARY_TEAM_ID --password $NOTARY_PASSWORD"
 
       - name: Verify what will be shipped
         run: |

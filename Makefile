@@ -89,7 +89,7 @@ requirement: app
 ## profile:  xcrun notarytool store-credentials NOTARY --apple-id <id> \
 ##             --team-id <team> --password <app-specific-password>
 NOTARY_PROFILE ?= NOTARY
-# CI has no keychain profile; it passes --apple-id/--team-id/--password @env:VAR.
+# CI has no keychain profile; it passes --apple-id, --team-id and --password.
 NOTARY_ARGS    ?= --keychain-profile "$(NOTARY_PROFILE)"
 notarize: app
 	@test "$(SIGN_IDENTITY)" != "-" || { echo "notarization needs a Developer ID certificate"; exit 1; }
