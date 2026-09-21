@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Unsandboxed for the direct-download build. This is a choice, not a
+	     requirement: a sandboxed build can still poll the pasteboard, register
+	     the hotkey and post Cmd-V once Accessibility is granted (see README,
+	     "Mac App Store"). What the sandbox takes away is the system Accessibility
+	     prompt, and it moves history into the app container. -->
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
+	<key>com.apple.security.automation.apple-events</key>
+	<false/>
+</dict>
+</plist>

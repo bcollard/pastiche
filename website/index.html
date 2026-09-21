@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Pastiche — an open-source clipboard manager for macOS</title>
+  <meta name="description" content="Pastiche is a small, open-source clipboard manager for macOS. Press a shortcut, arrow to what you copied earlier, press Return to paste it. Text and images, inline search, nothing leaves your Mac.">
+  <link rel="canonical" href="https://pastiche.runlocal.dev/">
+
+  <meta name="theme-color" content="#fbf9f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111017" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="application-name" content="Pastiche">
+  <meta name="author" content="Baptiste Collard">
+  <meta name="generator" content="hand-rolled HTML">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Slack / Discord / iMessage -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pastiche">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://pastiche.runlocal.dev/">
+  <meta property="og:title" content="Pastiche — everything you've copied, one shortcut away">
+  <meta property="og:description" content="Open-source clipboard manager for macOS. Text and images, inline search, keyboard-first, and nothing leaves your Mac.">
+  <meta property="og:image" content="https://pastiche.runlocal.dev/assets/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pastiche: everything you've copied, one shortcut away.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pastiche — everything you've copied, one shortcut away">
+  <meta name="twitter:description" content="Open-source clipboard manager for macOS. Text and images, inline search, keyboard-first.">
+  <meta name="twitter:image" content="https://pastiche.runlocal.dev/assets/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Applied before first paint so a saved theme choice never flashes the wrong one. -->
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pastiche",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "macOS 14 or later",
+    "description": "An open-source, keyboard-first clipboard manager for macOS with text and image history.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Baptiste Collard" }
+  }
+  </script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="./" aria-label="Pastiche, home">
+    <img src="assets/icon.png" alt="" width="30" height="30">
+    <strong>Pastiche</strong>
+  </a>
+  <div class="nav-links">
+    <a class="hide-sm" href="#features">Features</a>
+    <a class="hide-sm" href="#keyboard">Keyboard</a>
+    <a class="hide-sm" href="#privacy">Privacy</a>
+    <a href="#install">Install</a>
+    <a class="hide-sm" href="#faq">FAQ</a>
+    <a href="https://github.com/bcollard/pastiche">GitHub</a>
+    <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ================= Hero ================= -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Open source · Native Swift · macOS 14+</div>
+      <h1>Everything you’ve copied, <em>one shortcut</em> away.</h1>
+      <p class="lede">
+        Pastiche keeps your clipboard history and brings it up on <kbd>⌘</kbd> <kbd>'</kbd>.
+        Arrow to the snippet or screenshot you copied an hour ago, press <kbd>Return</kbd>,
+        and it lands in the app you were just in.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#install">Get Pastiche</a>
+        <a class="btn btn-ghost" href="https://github.com/bcollard/pastiche">View the source</a>
+      </div>
+      <ul class="facts">
+        <li>MIT licensed</li>
+        <li>About 2,200 lines of Swift</li>
+        <li>1.2&nbsp;MB app</li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <!-- An illustration of the real popup, built in HTML so it follows light/dark. -->
+      <div class="mock" id="mock" aria-hidden="true">
+        <div class="mock-head">
+          <strong>Clipboard</strong><span class="mock-count" id="mockCount">6</span>
+          <div class="mock-seg"><span class="on">All</span><span>Text</span><span>Images</span></div>
+        </div>
+        <div class="mock-search" id="mockSearch"><span>⌕</span><span id="mockQuery">Search (⇥)</span><span class="caret"></span></div>
+        <ul class="mock-list" id="mockList">
+          <li class="mock-row sel" data-q="developer.apple.com nspasteboard safari">
+            <div class="body"><span class="txt link">https://developer.apple.com/documentation/appkit/nspasteboard</span><span class="src">Safari</span></div><span class="num">1</span></li>
+          <li class="mock-row" data-q="func poll guard change last return xcode">
+            <div class="body"><span class="txt code">func poll() {
+  guard change != last else { return }
+}</span><span class="src">Xcode</span></div><span class="num">2</span></li>
+          <li class="mock-row image" data-q="image 1440 900 figma">
+            <div class="body"><div class="mock-img"><i></i><i></i><i></i><i></i></div><span class="src">1440 × 900 · Figma</span></div><span class="num">3</span></li>
+          <li class="mock-row" data-q="ship the changelog before friday notes">
+            <div class="body"><span class="txt">Ship the changelog before Friday</span><span class="src">Notes</span></div><span class="num">4</span></li>
+          <li class="mock-row" data-q="ssh -L 5432 db.internal bastion iterm2">
+            <div class="body"><span class="txt code">ssh -L 5432:db.internal:5432 bastion</span><span class="src">iTerm2</span></div><span class="num">5</span></li>
+          <li class="mock-row" data-q="#5b6cf0 figma color">
+            <div class="body"><span class="txt code">#5b6cf0</span><span class="src">Figma</span></div><span class="num">6</span></li>
+        </ul>
+        <div class="mock-foot"><span><b>↑↓</b>Navigate</span><span><b>←→</b>Type</span><span><b>⇥</b>Search</span><span><b>⌫</b>Delete</span><span><b>↩</b>Paste</span></div>
+      </div>
+      <div class="keycap-line" id="keycap" aria-hidden="true"></div>
+      <p class="sr-only">The Pastiche popup: a searchable list of recent clipboard entries, text and images, navigated with the arrow keys.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= Features ================= -->
+<section class="section section-alt" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> What it does</div>
+      <h2>A clipboard history, and not much else.</h2>
+      <p>Pastiche does one job. There is no sync, no snippet library, and no stack of settings to work through before it is useful.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="glyph">⌘</div><h3>One shortcut</h3>
+        <p><kbd>⌘</kbd><kbd>'</kbd> by default, rebindable to anything with a modifier. The popup opens on the screen your pointer is on, and closes when you click away.</p></article>
+      <article class="card"><div class="glyph">↕</div><h3>Keyboard all the way</h3>
+        <p>Arrows to move, <kbd>←</kbd><kbd>→</kbd> to switch between All, Text and Images, <kbd>Return</kbd> to paste, <kbd>⌘1</kbd>–<kbd>⌘0</kbd> to jump straight to a row.</p></article>
+      <article class="card"><div class="glyph">▣</div><h3>Text and images</h3>
+        <p>Snippets show as text. Images show as large previews sized to their own aspect ratio, so a screenshot looks like a screenshot. Filter to either type.</p></article>
+      <article class="card"><div class="glyph">⌕</div><h3>Search as you type</h3>
+        <p>Start typing and the list narrows. Every word has to match, so “png kong” finds what you would expect. <kbd>Tab</kbd> jumps into the field if you prefer.</p></article>
+      <article class="card"><div class="glyph">↩</div><h3>Pastes where you were</h3>
+        <p>Hands focus back to the app you came from and presses <kbd>⌘V</kbd> for you. That needs the Accessibility permission; without it, Pastiche just loads the clipboard.</p></article>
+      <article class="card"><div class="glyph">✕</div><h3>Forgets on request</h3>
+        <p>Delete an entry with <kbd>⌫</kbd> as you navigate, or clear everything. History is saved to disk, capped at 500 items by default, and survives restarts.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Keyboard ================= -->
+<section class="section" id="keyboard">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Keyboard</div>
+      <h2>Built to be used without the mouse.</h2>
+      <p>The paste key and the delete key are configurable. Everything else works as listed.</p>
+    </div>
+    <div class="keys">
+      <div>
+        <div class="key-row"><span>Open or close the popup</span><span class="combo"><kbd>⌘</kbd><kbd>'</kbd></span></div>
+        <div class="key-row"><span>Move through the list</span><span class="combo"><kbd>↑</kbd><kbd>↓</kbd></span></div>
+        <div class="key-row"><span>Switch All / Text / Images</span><span class="combo"><kbd>←</kbd><kbd>→</kbd></span></div>
+        <div class="key-row"><span>Paste the selected item</span><span class="combo"><kbd>Return</kbd></span></div>
+        <div class="key-row"><span>Paste the numbered row</span><span class="combo"><kbd>⌘1</kbd> … <kbd>⌘0</kbd></span></div>
+      </div>
+      <div>
+        <div class="key-row"><span>Search (or just start typing)</span><span class="combo"><kbd>Tab</kbd></span></div>
+        <div class="key-row"><span>Clear the search, then close</span><span class="combo"><kbd>Esc</kbd></span></div>
+        <div class="key-row"><span>Delete the selected item</span><span class="combo"><kbd>⌫</kbd></span></div>
+        <div class="key-row"><span>Clear the whole history</span><span class="combo"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>⌫</kbd></span></div>
+        <div class="key-row"><span>Jump eight rows, or to either end</span><span class="combo"><kbd>PgUp</kbd><kbd>PgDn</kbd><kbd>Home</kbd><kbd>End</kbd></span></div>
+      </div>
+    </div>
+    <p class="note">Bare <kbd>⌫</kbd> only deletes while the caret is outside the search field, where it has to stay ordinary text editing. <kbd>⌘</kbd><kbd>⌫</kbd> deletes from either place.</p>
+  </div>
+</section>
+
+<!-- ================= Privacy ================= -->
+<section class="section section-alt" id="privacy">
+  <div class="container split">
+    <div class="section-head" style="margin-bottom:0">
+      <div class="eyebrow"><span class="dot"></span> Privacy</div>
+      <h2>Your clipboard is the most sensitive thing on your Mac.</h2>
+      <p>It is where passwords, tokens and half-written messages pass through. Pastiche is designed around that, and it tells you where the limits are.</p>
+    </div>
+    <div>
+      <ul class="list">
+        <li><span><strong>It never leaves your Mac.</strong> The source contains no networking code, and no analytics. You can check, and this finds nothing:<code class="block">grep -rnE "URLSession|NWConnection" Sources</code></span></li>
+        <li><span><strong>Secrets are skipped.</strong> Anything an app marks as concealed, the convention password managers use on the pasteboard, is never recorded. Neither are transient or auto-generated items.</span></li>
+        <li><span><strong>Ignore any app.</strong> Copies made while a listed app is in front are dropped. 1Password, Bitwarden and Keychain Access are pre-filled.</span></li>
+        <li><span><strong>Nothing is encrypted at rest.</strong> History is plain JSON plus PNG files in <code>~/Library/Application Support</code>. Treat that folder like any file of your own notes. “Clear history” deletes both.</span></li>
+        <li><span><strong>Accessibility is optional.</strong> It is used for one thing, pressing <kbd>⌘V</kbd> in the app you came from.</span></li>
+      </ul>
+      <p class="note" style="margin-top:20px">The full policy is on the <a href="privacy.html">privacy page</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Verify ================= -->
+<section class="section" id="verify">
+  <div class="container split">
+    <div class="section-head" style="margin-bottom:0">
+      <div class="eyebrow"><span class="dot"></span> Check it yourself</div>
+      <h2>Small enough to read.</h2>
+      <p>Thirteen Swift files and about 2,200 lines, with no third-party dependencies. It links Apple frameworks and nothing else, which is a one-line check:</p>
+    </div>
+    <div>
+      <div class="codeblock">
+        <button class="copy" type="button" data-copy="otool -L /Applications/Pastiche.app/Contents/MacOS/*">Copy</button>
+<pre><code>otool -L /Applications/Pastiche.app/Contents/MacOS/*
+<span class="c"># AppKit, SwiftUI, Carbon, CryptoKit,</span>
+<span class="c"># ServiceManagement… all Apple's.</span></code></pre>
+      </div>
+      <div class="callout" style="margin-top:18px">
+        <strong>Coming from Copy ’Em?</strong> The repository includes an importer that reads its store
+        <em>read-only</em> and brings over your newest entries, images converted to PNG. Pastiche is not affiliated with Copy ’Em.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Install ================= -->
+<section class="section section-alt" id="install">
+  <div class="container split">
+    <div class="section-head" style="margin-bottom:0">
+      <div class="eyebrow"><span class="dot"></span> Install</div>
+      <h2>Build it in two commands.</h2>
+      <p>You need macOS 14 or later and the Xcode command-line tools. Signed and notarized downloads will be published on the <a href="https://github.com/bcollard/pastiche/releases">releases page</a>.</p>
+    </div>
+    <div>
+      <div class="codeblock">
+        <button class="copy" type="button" data-copy="git clone https://github.com/bcollard/pastiche.git&#10;cd pastiche &amp;&amp; make run">Copy</button>
+<pre><code>git clone https://github.com/bcollard/pastiche.git
+cd pastiche &amp;&amp; make run
+<span class="c"># make install  →  copies it to /Applications</span></code></pre>
+      </div>
+      <ol class="steps" style="margin-top:26px">
+        <li><span><strong>Look for the clipboard icon</strong> in your menu bar. There is no Dock icon and no main window.</span></li>
+        <li><span><strong>Copy a few things, then press <kbd>⌘</kbd> <kbd>'</kbd></strong> to open the popup.</span></li>
+        <li><span><strong>Grant Accessibility when asked</strong>, so Return can paste for you. You can decline and paste with <kbd>⌘V</kbd> yourself.</span></li>
+      </ol>
+      <p class="note">Builds run on the architecture of the Mac that made them, so one from an Apple silicon Mac is arm64-only.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Questions</div>
+      <h2>Worth answering up front.</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Why does it ask for Accessibility?</summary>
+        <p>Only to press <kbd>⌘V</kbd> in the app you came from. macOS treats posting keystrokes to another app as controlling the computer. The popup, the shortcut and the history all work without it; turn off “Paste into the active app automatically” and Pastiche will simply put the item on your clipboard.</p></details>
+      <details><summary>Does it record my passwords?</summary>
+        <p>Not from any app that marks its copies as concealed, which is the convention password managers use on the pasteboard; 1Password does. An app that does not mark its secrets is recorded like any other copy. That is what the ignored-apps list is for: 1Password, Bitwarden and Keychain Access are pre-filled, and you can add any other app by its bundle ID. You can also delete an entry with <kbd>⌫</kbd>.</p></details>
+      <details><summary>Where is my history, and is it encrypted?</summary>
+        <p>In <code>~/Library/Application Support/Pastiche/</code>: text in <code>history.json</code>, images as PNGs. It is not encrypted. If that matters for your threat model, FileVault covers the disk and the ignored-apps list covers the sources you care about.</p></details>
+      <details><summary>Is formatting preserved when I paste?</summary>
+        <p>No. Pastiche keeps plain text and images. Rich text, files and other pasteboard types are not stored, and text pastes back as plain text.</p></details>
+      <details><summary>Can I change the shortcut?</summary>
+        <p>Yes. Settings has a recorder for the global shortcut, a choice between <kbd>Return</kbd> and <kbd>⌘</kbd><kbd>Return</kbd> for pasting, and a choice for the delete key. The history cap is adjustable from 10 to 10,000 items.</p></details>
+      <details><summary>Does it sync between Macs?</summary>
+        <p>No, and it is not planned. Everything stays on the Mac that copied it.</p></details>
+      <details><summary>Does it run on Intel Macs?</summary>
+        <p>The code is not Apple-silicon specific, but a build made on an Apple silicon Mac is arm64-only. Build on an Intel Mac, or open an issue if you would like universal binaries published.</p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><strong style="color:var(--text);font-family:var(--serif);font-size:1.1rem">Pastiche</strong><br>
+        © 2026 Baptiste Collard · <a href="https://opensource.org/licenses/MIT">MIT licensed</a></div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/bcollard/pastiche">Source</a>
+        <a href="https://github.com/bcollard/pastiche/issues">Issues</a>
+        <a href="https://github.com/bcollard/pastiche/releases">Releases</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+    <p class="legal">Pastiche is an independent project and is not affiliated with Apple Inc. or the makers of Copy ’Em. macOS is a trademark of Apple Inc.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

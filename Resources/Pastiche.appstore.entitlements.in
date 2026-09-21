@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- The store requires the sandbox. Pasteboard polling, the Carbon hotkey
+	     and posting Cmd-V all work under it once Accessibility is granted by
+	     hand (README, "Mac App Store"). -->
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<!-- These two normally come from Xcode; a hand-signed store build has to
+	     state them itself. `make appstore` fills in the placeholders from the
+	     signing certificate and BUNDLE_ID. They must match the provisioning
+	     profile exactly. -->
+	<key>com.apple.application-identifier</key>
+	<string>__TEAM_ID__.__BUNDLE_ID__</string>
+	<key>com.apple.developer.team-identifier</key>
+	<string>__TEAM_ID__</string>
+</dict>
+</plist>

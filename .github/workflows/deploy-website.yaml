@@ -1,0 +1,100 @@
+name: Deploy website to GCS
+
+# Publishes website/ to https://pastiche.runlocal.dev/ on every push to main
+# (which includes a merged pull request) that touches the site.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'website/**'
+      - '!website/README.md'        # never published (excluded from the sync below)
+      - '!website/scripts/**'       # never published either
+      - '.github/workflows/deploy-website.yaml'
+  workflow_dispatch:
+
+# One deploy at a time. `rsync -d` mirrors deletions, so two overlapping runs
+# could each remove what the other just uploaded.
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # id-token is what Workload Identity Federation needs; nothing else is granted.
+    permissions:
+      contents: read
+      id-token: write
+
+    env:
+      # Named `pastiche-runlocal-dev`, not `pastiche.runlocal.dev`: a bucket named
+      # after a domain needs Search Console ownership verification. Traffic only
+      # reaches it through the load balancer (gcp-load-balancer-bco), so the
+      # bucket name does not have to match the hostname.
+      BUCKET: pastiche-runlocal-dev
+      SITE_DIR: website
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Refuse to mirror an incomplete site
+        # `rsync -d` deletes anything in the bucket that is not in the source.
+        # If website/ were ever empty or half-checked-out, that would wipe the site.
+        run: |
+          for f in index.html privacy.html 404.html styles.css app.js robots.txt sitemap.xml; do
+            if [ ! -s "${SITE_DIR}/${f}" ]; then
+              echo "::error::${SITE_DIR}/${f} is missing or empty; refusing to mirror it over the bucket"
+              exit 1
+            fi
+          done
+
+      - name: Auth via Workload Identity Federation
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: 'projects/681025799424/locations/global/workloadIdentityPools/gitops-pool/providers/gh-provider'
+          service_account: 'gha-push-gcs-pastiche@personal-218506.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Sync website/ → gs://${{ env.BUCKET }}
+        # -m parallel, -r recursive, -d true mirror (delete what is gone from the
+        # source). -x keeps what is not part of the published site out of the
+        # bucket: the README, the OG-image generator, and the temporary
+        # credentials file that google-github-actions/auth writes.
+        run: |
+          gsutil -m rsync -r -d \
+            -x '^README\.md$|^scripts/.*|^cicd/.*|(^|/)\.DS_Store$|(^|/)gha-creds-.*\.json$' \
+            "${SITE_DIR}" "gs://${BUCKET}"
+
+      - name: Set cache control
+        # The bucket sits behind Cloud CDN, which honours Cache-Control, so these
+        # values are also how long the edge may serve a stale copy after a deploy.
+        # Ten minutes for what changes with the site; a day for images, which are
+        # only replaced by uploading a new file.
+        run: |
+          gsutil -m setmeta -h 'Cache-Control:public, max-age=600' \
+            "gs://${BUCKET}/*.html" "gs://${BUCKET}/*.css" "gs://${BUCKET}/*.js" \
+            "gs://${BUCKET}/*.xml" "gs://${BUCKET}/*.txt"
+          gsutil -m setmeta -h 'Cache-Control:public, max-age=86400' \
+            "gs://${BUCKET}/assets/*"
+
+      - name: Verify the upload
+        run: |
+          gsutil ls "gs://${BUCKET}/index.html" "gs://${BUCKET}/privacy.html" "gs://${BUCKET}/assets/og-image.png"
+          echo "objects in bucket: $(gsutil ls -r "gs://${BUCKET}/**" | grep -vc ':$')"
+
+      - name: Summary
+        run: |
+          {
+            echo "Deployed \`${SITE_DIR}/\` to \`gs://${BUCKET}/\`"
+            echo ""
+            echo "URL: https://pastiche.runlocal.dev/"
+            echo ""
+            echo "Cloud CDN may serve the previous version for up to 10 minutes."
+          } >> "$GITHUB_STEP_SUMMARY"
