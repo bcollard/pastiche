@@ -144,25 +144,31 @@ STORE_DIR      := $(DIST_DIR)/appstore
 STORE_APP      := $(STORE_DIR)/$(BUNDLE_NAME).app
 STORE_PKG      := $(STORE_DIR)/$(APP_NAME).pkg
 PROFILE        ?=
+# zsh does not expand ~ in `PROFILE=~/x` given as an argument, so do it here.
+PROFILE_FILE   = $(patsubst ~/%,$(HOME)/%,$(PROFILE))
 
 appstore: build $(DIST_DIR)/AppIcon.icns
 	@test -n "$(STORE_APP_IDENTITY)" || { echo "No Apple Distribution certificate found in the keychain. See README, Distribution."; exit 1; }
 	@test -n "$(STORE_PKG_IDENTITY)" || { echo "No Mac Installer Distribution certificate found in the keychain. See README, Distribution."; exit 1; }
-	@test -f "$(PROFILE)" || { echo "PROFILE=<path to a Mac App Store .provisionprofile> is required. See README, Distribution."; exit 1; }
+	@test -f "$(PROFILE_FILE)" || { echo "PROFILE=<path to a Mac App Store .provisionprofile> is required. See README, Distribution."; exit 1; }
 	@rm -rf "$(STORE_DIR)"
 	@mkdir -p "$(STORE_APP)/Contents/MacOS" "$(STORE_APP)/Contents/Resources"
 	cp "$(BUILD_DIR)/$(APP_NAME)" "$(STORE_APP)/Contents/MacOS/$(APP_NAME)"
 	cp "$(DIST_DIR)/AppIcon.icns" "$(STORE_APP)/Contents/Resources/AppIcon.icns"
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD)/' \
 		Resources/Info.plist > "$(STORE_APP)/Contents/Info.plist"
-	cp "$(PROFILE)" "$(STORE_APP)/Contents/embedded.provisionprofile"
+	cp "$(PROFILE_FILE)" "$(STORE_APP)/Contents/embedded.provisionprofile"
+	# A downloaded profile carries quarantine and download-origin attributes, and
+	# macOS adds provenance ones. None belong in a store package; they would ship
+	# as AppleDouble (._*) entries.
+	/usr/bin/xattr -cr "$(STORE_APP)"
 	sed -e 's/__TEAM_ID__/$(STORE_TEAM_ID)/g' -e 's/__BUNDLE_ID__/$(BUNDLE_ID)/g' \
 		Resources/$(APP_NAME).appstore.entitlements.in > "$(STORE_DIR)/entitlements.plist"
 	codesign --force --timestamp --sign "$(STORE_APP_IDENTITY)" \
 		--identifier $(BUNDLE_ID) \
 		--entitlements "$(STORE_DIR)/entitlements.plist" \
 		"$(STORE_APP)"
-	productbuild --component "$(STORE_APP)" /Applications \
+	COPYFILE_DISABLE=1 productbuild --component "$(STORE_APP)" /Applications \
 		--sign "$(STORE_PKG_IDENTITY)" "$(STORE_PKG)"
 	@echo "Built $(STORE_PKG)"
 	@echo "  App signed with: $(STORE_APP_IDENTITY)"

@@ -61,10 +61,22 @@ final class PopupModel: ObservableObject {
         refresh()
     }
 
+    /// Screenshot hooks: `PASTICHE_QUERY` and `PASTICHE_FILTER` (text or image)
+    /// make the popup open with a search and a type filter already applied.
+    private static let presetQuery = ProcessInfo.processInfo.environment["PASTICHE_QUERY"]
+    private static let presetFilter: TypeFilter? = {
+        switch ProcessInfo.processInfo.environment["PASTICHE_FILTER"] {
+        case "text": return .text
+        case "image": return .image
+        default: return nil
+        }
+    }()
+
     /// Resets to the state the popup should open in.
     func reset() {
-        query = ""
-        searchFocused = false
+        if let preset = Self.presetFilter { typeFilter = preset }
+        query = Self.presetQuery ?? ""
+        searchFocused = Self.presetQuery != nil
         refresh()
         selectedID = visibleItems.first?.id
     }

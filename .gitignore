@@ -4,3 +4,4 @@ dist/
 *.xcodeproj
 .swiftpm/
 Package.resolved
+.vscode/

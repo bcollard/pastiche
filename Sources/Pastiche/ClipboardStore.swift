@@ -24,15 +24,24 @@ final class ClipboardStore: ObservableObject {
     /// real history.
     init(settings: Settings, directory: URL? = nil) {
         self.settings = settings
-        let root = directory ?? FileManager.default
-            .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Pastiche", isDirectory: true)
+        let root = directory ?? Self.defaultDirectory()
         self.directory = root
         imagesDirectory = root.appendingPathComponent("images", isDirectory: true)
         historyFile = root.appendingPathComponent("history.json")
 
         try? FileManager.default.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
         load()
+    }
+
+    /// `PASTICHE_DATA_DIR` points the app at another history folder. The store
+    /// listing screenshots use it, so no real clipboard data is ever on screen.
+    private static func defaultDirectory() -> URL {
+        if let override = ProcessInfo.processInfo.environment["PASTICHE_DATA_DIR"], !override.isEmpty {
+            return URL(fileURLWithPath: override, isDirectory: true)
+        }
+        return FileManager.default
+            .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Pastiche", isDirectory: true)
     }
 
     // MARK: - Mutation

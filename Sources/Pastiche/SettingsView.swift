@@ -13,12 +13,15 @@ struct SettingsView: View {
     private let permissionPoll = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var newBundleID = ""
     @State private var showingClearConfirmation = false
+    /// `PASTICHE_SETTINGS_TAB` (general, privacy or about) opens Settings on a
+    /// given tab. Used by the store-listing screenshots.
+    @State private var tab = ProcessInfo.processInfo.environment["PASTICHE_SETTINGS_TAB"] ?? "general"
 
     var body: some View {
-        TabView {
-            general.tabItem { Label("General", systemImage: "gearshape") }
-            privacy.tabItem { Label("Privacy", systemImage: "hand.raised") }
-            about.tabItem { Label("About", systemImage: "info.circle") }
+        TabView(selection: $tab) {
+            general.tabItem { Label("General", systemImage: "gearshape") }.tag("general")
+            privacy.tabItem { Label("Privacy", systemImage: "hand.raised") }.tag("privacy")
+            about.tabItem { Label("About", systemImage: "info.circle") }.tag("about")
         }
         .frame(width: 460, height: 430)
         .onAppear { refreshPermission() }

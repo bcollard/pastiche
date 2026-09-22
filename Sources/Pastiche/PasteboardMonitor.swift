@@ -37,6 +37,9 @@ final class PasteboardMonitor {
 
     func start(interval: TimeInterval = 0.35) {
         stop()
+        // Demo mode for the store-listing screenshots: never record the real
+        // clipboard, so only the prepared history is ever on screen.
+        if ProcessInfo.processInfo.environment["PASTICHE_NO_CAPTURE"] == "1" { return }
         let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.poll() }
         }
