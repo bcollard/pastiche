@@ -100,6 +100,12 @@ h1, h2 { font-family: var(--serif); font-weight: 700; text-wrap: balance; }
 .nav-links { display: flex; align-items: center; gap: clamp(12px, 2.4vw, 26px); }
 .nav-links a { text-decoration: none; color: var(--text-2); font-size: 0.93rem; font-weight: 500; }
 .nav-links a:hover { color: var(--text); }
+.nav-links .nav-version {
+  margin-left: -6px; padding: 2px 8px; border-radius: 999px;
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+  color: var(--brand-ink); background: var(--brand-soft);
+}
+.nav-links .nav-version:hover { color: var(--brand); }
 .icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
   width: 36px; height: 36px; border-radius: 10px; cursor: pointer;

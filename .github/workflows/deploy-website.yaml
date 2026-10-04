@@ -10,6 +10,11 @@ on:
       - '!website/README.md'        # never published (excluded from the sync below)
       - '!website/scripts/**'       # never published either
       - '.github/workflows/deploy-website.yaml'
+  # After a release, so the version in the nav follows it. The Release workflow
+  # creates the release with GITHUB_TOKEN, which does not fire a `release` event.
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
   workflow_dispatch:
 
 # One deploy at a time. `rsync -d` mirrors deletions, so two overlapping runs
@@ -24,6 +29,10 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # A failed or test (workflow_dispatch) Release run publishes nothing new.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
 
     # id-token is what Workload Identity Federation needs; nothing else is granted.
     permissions:
@@ -52,6 +61,21 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Stamp the latest release into the nav
+        # index.html carries the version at commit time; this keeps it current
+        # without the page calling the GitHub API (the site makes no third-party requests).
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
+          if ! [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::unexpected latest release tag '$tag'"
+            exit 1
+          fi
+          sed -i -E "/data-release/ s#>v[^<]*</a>#>${tag}</a>#" "${SITE_DIR}/index.html"
+          grep -q "data-release.*>${tag}</a>" "${SITE_DIR}/index.html"
+          echo "Latest release: $tag"
 
       - name: Auth via Workload Identity Federation
         uses: google-github-actions/auth@v3
