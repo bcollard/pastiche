@@ -29,10 +29,12 @@ quit_pastiche() {
 
 check_build() {
   [[ -d "$APP" ]] || { echo "No $APP. Install the build under review from TestFlight first." >&2; exit 1; }
-  local version build authority
+  local version build signature authority
   version="$(defaults read "$APP/Contents/Info" CFBundleShortVersionString)"
   build="$(defaults read "$APP/Contents/Info" CFBundleVersion)"
-  authority="$(codesign -dv --verbose=2 "$APP" 2>&1 | awk -F= '/^Authority=/{print $2; exit}')"
+  # Capture first: awk exiting early would SIGPIPE codesign and trip pipefail.
+  signature="$(codesign -dv --verbose=2 "$APP" 2>&1)"
+  authority="$(awk -F= '/^Authority=/{print $2; exit}' <<< "$signature")"
   echo "Installed: Pastiche $version ($build), signed by: $authority"
   if [[ "$authority" == "Developer ID Application"* ]]; then
     echo "  WARNING: this is the direct-download build, not the one under review."
