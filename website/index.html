@@ -142,7 +142,7 @@
       <article class="card"><div class="glyph">⌕</div><h3>Search</h3>
         <p>Start typing to filter. Every word must match.</p></article>
       <article class="card"><div class="glyph">↩</div><h3>Paste</h3>
-        <p>Returns focus to your app and presses <kbd>⌘V</kbd>. Needs the Accessibility permission.</p></article>
+        <p>Returns focus to your app with the item on the clipboard. Optional auto-paste presses <kbd>⌘V</kbd> for you.</p></article>
       <article class="card"><div class="glyph">✕</div><h3>History</h3>
         <p>Saved to disk, 500 items by default. Delete an entry with <kbd>⌫</kbd>.</p></article>
     </div>
@@ -183,7 +183,7 @@
         <li><span><strong>Secrets skipped.</strong> Items an app marks as concealed, transient or auto-generated are not recorded.</span></li>
         <li><span><strong>Ignored apps.</strong> Copies from listed apps are dropped. 1Password, Bitwarden and Keychain Access are pre-filled.</span></li>
         <li><span><strong>Not encrypted.</strong> History is plain JSON and PNG files in <code>~/Library/Application Support/Pastiche</code>.</span></li>
-        <li><span><strong>Accessibility is optional.</strong> It is only used to send <kbd>⌘V</kbd>.</span></li>
+        <li><span><strong>No permissions by default.</strong> Accessibility is requested only if you turn on auto-paste, to send <kbd>⌘V</kbd>.</span></li>
       </ul>
       <p class="note" style="margin-top:20px"><a href="privacy.html">Full privacy policy</a></p>
     </div>
@@ -236,7 +236,7 @@ cd pastiche &amp;&amp; make install</code></pre>
       <ol class="steps" style="margin-top:30px">
         <li><span>Find the clipboard icon in the menu bar. There is no Dock icon.</span></li>
         <li><span>Copy something, then press <kbd>⌘</kbd> <kbd>'</kbd>.</span></li>
-        <li><span>Grant Accessibility when asked. It is optional: without it you paste with <kbd>⌘V</kbd> yourself.</span></li>
+        <li><span>Pick an item, then press <kbd>⌘V</kbd>. To have Pastiche paste for you, turn on auto-paste in Settings and grant Accessibility.</span></li>
       </ol>
     </div>
   </div>
@@ -247,8 +247,8 @@ cd pastiche &amp;&amp; make install</code></pre>
   <div class="container">
     <div class="section-head"><h2>FAQ</h2></div>
     <div class="faq">
-      <details><summary>Why does it ask for Accessibility?</summary>
-        <p>To press <kbd>⌘V</kbd> in the app you came from. Without it, Pastiche copies the item and you paste it yourself.</p></details>
+      <details><summary>Why would it ask for Accessibility?</summary>
+        <p>Only if you enable auto-paste, to press <kbd>⌘V</kbd> in the app you came from. Without it, Pastiche copies the item and you paste it yourself.</p></details>
       <details><summary>Does it record passwords?</summary>
         <p>Not from apps that mark them as concealed; 1Password does. Add any other app to the ignored list in Settings, or delete the entry with <kbd>⌫</kbd>.</p></details>
       <details><summary>Where is my history?</summary>

@@ -128,7 +128,7 @@ final class Settings: ObservableObject {
         }
         maxItems = defaults.object(forKey: Keys.maxItems) as? Int ?? 500
         commitKey = CommitKey(rawValue: defaults.string(forKey: Keys.commitKey) ?? "") ?? .return
-        autoPaste = defaults.object(forKey: Keys.autoPaste) as? Bool ?? true
+        autoPaste = defaults.object(forKey: Keys.autoPaste) as? Bool ?? false
         moveToTopOnPaste = defaults.object(forKey: Keys.moveToTopOnPaste) as? Bool ?? true
         deleteKey = DeleteKey(rawValue: defaults.string(forKey: Keys.deleteKey) ?? "") ?? .delete
         skipConcealed = defaults.object(forKey: Keys.skipConcealed) as? Bool ?? true

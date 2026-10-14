@@ -94,18 +94,20 @@ behaves. The segmented control at the top always shows which filter is live.
 
 ## Permissions
 
-The app asks for **Accessibility** the first time it pastes. It needs it only
-to press `⌘V` in the app you came from; the popup, the shortcut, and the
-history all work without it. If you decline, turn off *Paste into the active
-app automatically* in Settings and the app will only put the item on your
-clipboard for you to paste yourself.
+Pastiche asks for no permission by default. Picking an item copies it to the
+clipboard and you press `⌘V` yourself.
+
+**Accessibility** is requested only when you turn on *Paste into the active app
+automatically* in Settings. It is needed only to press `⌘V` in the app you came
+from; the popup, the shortcut, and the history all work without it. Turn the
+setting off again and the app goes back to copy-only.
 
 Grant it under *System Settings → Privacy & Security → Accessibility*. If the
 About tab still reads *Not granted* a moment after you granted it, press
 **Relaunch** — a few macOS builds only hand the new grant to a fresh process.
 
-Until it is granted the popup shows an inline banner rather than re-raising the
-system modal on every paste; the system prompt appears at most once per run.
+While auto-paste is on and the grant is missing, the popup shows an inline
+banner. The system prompt appears only when you enable the setting.
 
 **A toggle that is switched on does not always mean granted.** macOS stores the
 grant against the app's code-signing requirement, so if the signature changed
@@ -329,9 +331,10 @@ SHA-256 fingerprint is `DCF21878…AC91601F` before trusting it. The installer
 certificate reports "Invalid Extended Key Usage" under the code-signing policy;
 that is expected, since it is not a code-signing certificate.
 
-**Not yet done for the store build:** the in-app onboarding for the manual
-Accessibility grant described above. Today the popup's *Grant…* button opens the
-right pane, but nothing tells a sandboxed user that they must add the app with
+Auto-paste is off by default, so the store build asks for no permission and works
+as copy-only until the user turns it on. **Not yet done:** the in-app onboarding
+for the manual Accessibility grant that follows. Today the *Grant…* button opens
+the right pane, but nothing tells a sandboxed user that they must add the app with
 **+** themselves.
 
 ## Not included

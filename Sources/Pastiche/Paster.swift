@@ -31,21 +31,11 @@ enum Paster {
     ///
     /// The caller must have already given focus back to the target app;
     /// synthetic events go to the frontmost application, not to a chosen one.
-    /// Whether the system prompt has already been shown in this run.
     ///
-    /// Without this the modal reappears on every single paste, which is worse
-    /// than useless once the user has decided to deal with it later. The popup
-    /// shows a persistent inline banner instead.
-    private static var hasPromptedForAccessibility = false
-
+    /// Never prompts: the permission is requested only when the user turns on
+    /// automatic pasting in Settings. Without it the popup shows a banner.
     static func sendPasteKeystroke() {
-        guard hasAccessibilityPermission(prompt: false) else {
-            if !hasPromptedForAccessibility {
-                hasPromptedForAccessibility = true
-                requestAccessibilityPermission()
-            }
-            return
-        }
+        guard hasAccessibilityPermission(prompt: false) else { return }
         guard let source = CGEventSource(stateID: .combinedSessionState) else { return }
         // Don't let our own synthetic ⌘V be swallowed by a stale modifier the
         // user is still physically holding from the hotkey.

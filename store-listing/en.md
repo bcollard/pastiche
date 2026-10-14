@@ -54,7 +54,7 @@ PRIVACY
 • History is stored on your Mac and is not encrypted.
 
 PERMISSIONS
-Pasting into another app needs the Accessibility permission. It is the only permission Pastiche asks for. Without it, Pastiche still copies the selected item and you paste it yourself with ⌘V.
+Pastiche asks for no permission by default: pick an item and press ⌘V to paste it. If you turn on the optional setting that pastes for you, macOS asks for the Accessibility permission, which is used only to send ⌘V.
 
 REQUIREMENTS
 macOS 14 or later. Pastiche runs in the menu bar and has no Dock icon.
@@ -73,7 +73,9 @@ To test:
 2. Copy some text and an image in any app.
 3. Press ⌘' to open the popup. Select an item with the arrow keys and press Return.
 
-Pasting into another app: Pastiche sends ⌘V to the app you came from, which macOS only allows with the Accessibility permission. Enable it in System Settings > Privacy & Security > Accessibility: click +, choose Pastiche, and switch it on. It is the only permission requested and it is optional. Without it, the app copies the selected item to the clipboard.
+Pressing Return copies the selected item to the clipboard; press ⌘V to paste it. No permission is needed.
+
+Optional: Settings (⌘,) > Shortcuts > "Paste into the active app automatically" is off by default. When turned on, Pastiche sends ⌘V for you, which macOS only allows with the Accessibility permission, so macOS asks for it then. Add Pastiche in System Settings > Privacy & Security > Accessibility: click +, choose Pastiche, and switch it on.
 
 The app has no account, no in-app purchase, no network access and no analytics. Clipboard content stays on the device. Privacy policy: https://pastiche.runlocal.dev/privacy.html
 

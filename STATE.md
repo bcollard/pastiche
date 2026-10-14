@@ -15,9 +15,10 @@ App Review Information > Notes.
 
 ### Next
 
-1. Add build 5 to an internal TestFlight group and install it on the Mac. It replaces
+1. Auto-paste is now off by default (no permission prompt unless enabled), so build 5
+   is outdated: upload a new build, then add it to an internal TestFlight group and install it on the Mac. It replaces
    the Homebrew (Developer ID) copy in /Applications.
-2. Try the in-app Settings > About > Grant… button on that build. If it does nothing
+2. Optional: enable auto-paste in Settings and try the Accessibility grant on that build. If it does nothing
    (the sandbox hides the system prompt), consider building the in-app Accessibility
    guide before resubmitting.
 3. `store-listing/tools/recording.sh prep`, turn on Do Not Disturb, record with ⌘⇧5

@@ -55,9 +55,14 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
                 Toggle("Paste into the active app automatically", isOn: $settings.autoPaste)
+                    .onChange(of: settings.autoPaste) { _, enabled in
+                        if enabled && !Paster.hasAccessibilityPermission(prompt: false) {
+                            Paster.requestAccessibilityPermission()
+                        }
+                    }
                 Text(settings.autoPaste
-                     ? "The selected item is copied and ⌘V is sent to the app you came from."
-                     : "The selected item is only copied; paste it yourself.")
+                     ? "The selected item is copied and ⌘V is sent to the app you came from. Needs the Accessibility permission."
+                     : "The selected item is only copied; press ⌘V yourself. No permission needed.")
                     .font(.system(size: 10))
                     .foregroundStyle(.secondary)
             } header: {
@@ -174,6 +179,7 @@ struct SettingsView: View {
 
     private var about: some View {
         Form {
+            if settings.autoPaste {
             Section {
                 LabeledContent("Accessibility") {
                     HStack(spacing: 8) {
@@ -201,6 +207,7 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             } header: {
                 Text("Permissions")
+            }
             }
 
             Section {
