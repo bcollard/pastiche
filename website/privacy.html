@@ -3,6 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DV5S4HV49V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DV5S4HV49V');
+  </script>
   <title>Privacy — Pastiche</title>
   <meta name="description" content="What Pastiche stores, where, and what it never does.">
   <link rel="canonical" href="https://pastiche.runlocal.dev/privacy.html">
@@ -30,9 +38,9 @@
 <main class="container">
   <article class="prose">
     <h1>Privacy</h1>
-    <p class="meta">Last updated 21 September 2026</p>
+    <p class="meta">Last updated 27 October 2026</p>
 
-    <p>Pastiche collects no data. It has no accounts, no analytics and no networking code.</p>
+    <p>The Pastiche app collects no data. It has no accounts, no analytics and no networking code.</p>
 
     <h2>What the app stores</h2>
     <p>On your Mac only, in <code>~/Library/Application Support/Pastiche/</code>:</p>
@@ -66,7 +74,7 @@
     </ul>
 
     <h2>This website</h2>
-    <p>It sets no cookies and loads no third-party scripts, fonts or analytics. The dark-mode button stores <code>light</code> or <code>dark</code> in your browser's local storage. That value never leaves your device. The web host may keep ordinary access logs. This site does not read them.</p>
+    <p>This website, unlike the app, uses Google Analytics to count visits. It loads Google's <code>gtag.js</code> script, which sets first-party <code>_ga</code> cookies and sends Google the page you view, the referring page, your approximate location and your device type. I use it only to see how many people visit and how they find the site. It loads no other third-party scripts or fonts. The dark-mode button stores <code>light</code> or <code>dark</code> in your browser's local storage. That value never leaves your device. The web host may keep ordinary access logs. This site does not read them.</p>
 
     <h2>Contact</h2>
     <p><a href="https://github.com/bcollard/pastiche/issues">Open an issue</a>. The source is public, so you can check every statement above against the code.</p>
