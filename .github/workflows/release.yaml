@@ -75,7 +75,7 @@ jobs:
       VERSION: ${{ needs.preflight.outputs.version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0    # the build number comes from the commit count
 
@@ -144,7 +144,7 @@ jobs:
           ( cd dist && shasum -a 256 -c "Pastiche-${VERSION}.zip.sha256" )
 
       - name: Upload the build
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: release
           path: |
@@ -173,7 +173,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Download the build
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: release
           path: dist
@@ -189,7 +189,7 @@ jobs:
           fi
 
       - name: Check out the Homebrew tap
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: bcollard/homebrew-pastiche
           token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
