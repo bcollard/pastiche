@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Refuse to mirror an incomplete site
         # `rsync -d` deletes anything in the bucket that is not in the source.
@@ -78,13 +78,13 @@ jobs:
           echo "Latest release: $tag"
 
       - name: Auth via Workload Identity Federation
-        uses: google-github-actions/auth@v3
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
         with:
           workload_identity_provider: 'projects/681025799424/locations/global/workloadIdentityPools/gitops-pool/providers/gh-provider'
           service_account: 'gha-push-gcs-pastiche@personal-218506.iam.gserviceaccount.com'
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v3
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
 
       - name: Sync website/ → gs://${{ env.BUCKET }}
         # -m parallel, -r recursive, -d true mirror (delete what is gone from the
