@@ -65,6 +65,12 @@ struct SettingsView: View {
                      : "The selected item is only copied; press ⌘V yourself. No permission needed.")
                     .font(.system(size: 10))
                     .foregroundStyle(.secondary)
+                if settings.autoPaste {
+                    Toggle("Paste images into terminals with ⌃V", isOn: $settings.imageControlVInTerminals)
+                    Text("For CLI tools like Claude Code, which read images on ⌃V. Avoids the terminal's own image-paste dialog.")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.secondary)
+                }
             } header: {
                 Text("Shortcuts")
             }

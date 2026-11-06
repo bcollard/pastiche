@@ -153,6 +153,12 @@ final class ClipboardStore: ObservableObject {
         return image
     }
 
+    /// Returns the stored PNG bytes for an image item.
+    func pngData(for item: ClipboardItem) -> Data? {
+        guard let file = item.imageFile else { return nil }
+        return try? Data(contentsOf: imagesDirectory.appendingPathComponent(file))
+    }
+
     private static func pixelSize(of image: NSImage) -> (width: Int, height: Int) {
         if let rep = image.representations.first {
             return (rep.pixelsWide, rep.pixelsHigh)

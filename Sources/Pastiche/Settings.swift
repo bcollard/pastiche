@@ -84,6 +84,11 @@ final class Settings: ObservableObject {
     @Published var autoPaste: Bool {
         didSet { defaults.set(autoPaste, forKey: Keys.autoPaste) }
     }
+    /// Send ⌃V instead of ⌘V when pasting an image into a terminal, so CLI
+    /// tools like Claude Code receive the image instead of the terminal.
+    @Published var imageControlVInTerminals: Bool {
+        didSet { defaults.set(imageControlVInTerminals, forKey: Keys.imageControlVInTerminals) }
+    }
     /// After pasting an item from the popup, move it to the top of the list.
     @Published var moveToTopOnPaste: Bool {
         didSet { defaults.set(moveToTopOnPaste, forKey: Keys.moveToTopOnPaste) }
@@ -112,6 +117,7 @@ final class Settings: ObservableObject {
         static let maxItems = "maxItems"
         static let commitKey = "commitKey"
         static let autoPaste = "autoPaste"
+        static let imageControlVInTerminals = "imageControlVInTerminals"
         static let moveToTopOnPaste = "moveToTopOnPaste"
         static let deleteKey = "deleteKey"
         static let skipConcealed = "skipConcealed"
@@ -129,6 +135,7 @@ final class Settings: ObservableObject {
         maxItems = defaults.object(forKey: Keys.maxItems) as? Int ?? 500
         commitKey = CommitKey(rawValue: defaults.string(forKey: Keys.commitKey) ?? "") ?? .return
         autoPaste = defaults.object(forKey: Keys.autoPaste) as? Bool ?? false
+        imageControlVInTerminals = defaults.object(forKey: Keys.imageControlVInTerminals) as? Bool ?? true
         moveToTopOnPaste = defaults.object(forKey: Keys.moveToTopOnPaste) as? Bool ?? true
         deleteKey = DeleteKey(rawValue: defaults.string(forKey: Keys.deleteKey) ?? "") ?? .delete
         skipConcealed = defaults.object(forKey: Keys.skipConcealed) as? Bool ?? true

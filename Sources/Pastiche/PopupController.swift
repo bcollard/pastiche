@@ -158,8 +158,10 @@ final class PopupController {
         guard settings.autoPaste else { return }
         // Give the reactivated app a moment to become frontmost, otherwise the
         // synthetic ⌘V lands on whatever was still in front.
+        let kind = item.kind
+        let controlVInTerminals = settings.imageControlVInTerminals
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-            Paster.sendPasteKeystroke()
+            Paster.sendPasteKeystroke(for: kind, controlVInTerminals: controlVInTerminals)
         }
     }
 

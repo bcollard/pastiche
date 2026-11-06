@@ -21,20 +21,42 @@ enum Paster {
             pasteboard.setString(text, forType: .string)
             return item.fingerprint
         case .image:
-            guard let image = store.image(for: item) else { return nil }
-            pasteboard.writeObjects([image])
+            // Write the stored PNG as-is. Writing the NSImage would put a TIFF
+            // on the board, which is several times larger.
+            if let png = store.pngData(for: item) {
+                pasteboard.setData(png, forType: .png)
+            } else if let image = store.image(for: item) {
+                pasteboard.writeObjects([image])
+            } else {
+                return nil
+            }
             return item.fingerprint
         }
     }
 
-    /// Sends ⌘V to whatever is frontmost.
+    /// Terminal emulators. In these, ⌘V with an image makes the terminal
+    /// handle the image itself (iTerm2 asks how to paste it), while ⌃V reaches
+    /// the program running inside, such as Claude Code, which reads the image
+    /// from the pasteboard on its own.
+    static let terminalBundleIDs: Set<String> = [
+        "com.googlecode.iterm2",
+        "com.apple.Terminal",
+        "com.mitchellh.ghostty",
+        "com.github.wez.wezterm",
+        "net.kovidgoyal.kitty",
+        "io.alacritty",
+        "dev.warp.Warp-Stable",
+    ]
+
+    /// Sends ⌘V to whatever is frontmost, or ⌃V when an image goes into a
+    /// terminal and the user enabled that in Settings.
     ///
     /// The caller must have already given focus back to the target app;
     /// synthetic events go to the frontmost application, not to a chosen one.
     ///
     /// Never prompts: the permission is requested only when the user turns on
     /// automatic pasting in Settings. Without it the popup shows a banner.
-    static func sendPasteKeystroke() {
+    static func sendPasteKeystroke(for kind: ItemKind, controlVInTerminals: Bool) {
         guard hasAccessibilityPermission(prompt: false) else { return }
         guard let source = CGEventSource(stateID: .combinedSessionState) else { return }
         // Don't let our own synthetic ⌘V be swallowed by a stale modifier the
@@ -47,8 +69,11 @@ enum Paster {
         let vKey = CGKeyCode(kVK_ANSI_V)
         let down = CGEvent(keyboardEventSource: source, virtualKey: vKey, keyDown: true)
         let up = CGEvent(keyboardEventSource: source, virtualKey: vKey, keyDown: false)
-        down?.flags = .maskCommand
-        up?.flags = .maskCommand
+        let frontmost = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? ""
+        let useControl = controlVInTerminals && kind == .image && terminalBundleIDs.contains(frontmost)
+        let flags: CGEventFlags = useControl ? .maskControl : .maskCommand
+        down?.flags = flags
+        up?.flags = flags
         down?.post(tap: .cghidEventTap)
         up?.post(tap: .cghidEventTap)
     }
